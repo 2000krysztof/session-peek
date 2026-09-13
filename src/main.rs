@@ -1,5 +1,7 @@
+mod ansi;
 mod cli;
 mod config;
+mod line_assembler;
 mod log_format;
 mod query;
 mod root;
