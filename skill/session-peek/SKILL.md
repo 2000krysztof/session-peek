@@ -15,7 +15,7 @@ Check the binary is available: `sessionPeek --version` (or `which sessionPeek`).
 
 ## Command reference (current — v1)
 
-Only two commands exist right now. Do not invoke or suggest `-d`/`--detach`, `status`, or `stop` — they are planned but **not implemented yet**; using them will just fail.
+Three commands exist right now: `run`, `log`, `delete`. Do not invoke or suggest `-d`/`--detach` on `run`, `status`, or `stop` — they are planned but **not implemented yet**; using them will just fail.
 
 ### `sessionPeek run -t <tag> -- <command...>`
 
@@ -30,6 +30,8 @@ This call **blocks** in the foreground until the process exits — there is no b
 - When the **dev** runs it, it behaves exactly like running the command directly (e.g. `npm run dev`) — nothing changes for them except a log file also gets written.
 - When **you** (the agent) need to start something yourself without blocking your own turn, invoke it through your own tool's background-execution feature (e.g. Bash's `run_in_background`) rather than waiting on it — `sessionPeek run` itself has no such flag today.
 - Never start two `run` invocations with the same tag concurrently — both will append to the same log file with no coordination between them, which gets confusing. If a tagged process needs restarting, stop the existing one first (Ctrl-C for a foreground one; there's no `stop` command yet for anything else).
+
+Add `--fresh` to clear the tag's existing log and start writing from empty, instead of appending to whatever's already there (e.g. `sessionPeek run -t backend --fresh -- <command...>`). Useful when old output from a previous run is no longer relevant and would just add noise to later `log` queries.
 
 Tag naming convention: short, lowercase, descriptive — `frontend`, `backend`, `db`, matching how the dev already thinks about their services.
 
@@ -51,6 +53,12 @@ Flags compose. Useful recipes:
 - Hunting a specific error: `sessionPeek log backend --grep "Error|Exception"`
 
 If `log` errors with "no log found for tag", the tag either was never started, or was started from a different project root (root discovery walks up from cwd to the nearest marker — `.git`, `Cargo.toml`, `package.json`, `.sessionpeek.json`, etc. — so a mismatch usually means the dev ran it from a different directory than you're querying from).
+
+### `sessionPeek delete <tag>`
+
+Deletes `<tag>`'s log file outright. Use this for cleanup (e.g. the dev is done with a tag and wants its history gone), not as a way to "reset" a tag before restarting it — use `run --fresh` for that instead, since it's one step and doesn't race with a process that might still be writing.
+
+Caveat: if a `run` for that tag happens to still be actively writing when you delete its log, deleting doesn't stop that process — it keeps writing, just to a now-unlinked file that's no longer reachable at that path until the process exits. Prefer deleting a tag only once you know nothing is actively running for it.
 
 ## Suggesting this to a dev
 
