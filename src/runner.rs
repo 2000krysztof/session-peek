@@ -16,7 +16,7 @@ use crate::root;
 
 const IDLE_FLUSH: Duration = Duration::from_millis(200);
 
-pub fn cmd_run(tag: &str, command: &[String]) -> Result<i32> {
+pub fn cmd_run(tag: &str, fresh: bool, command: &[String]) -> Result<i32> {
     let Some((program, args)) = command.split_first() else {
         bail!("no command given to run (usage: sessionPeek run -t <tag> -- <command...>)");
     };
@@ -28,9 +28,14 @@ pub fn cmd_run(tag: &str, command: &[String]) -> Result<i32> {
         .with_context(|| format!("failed to create log directory {}", log_dir.display()))?;
     let log_path = log_dir.join(format!("{tag}.log"));
 
-    let mut log_file = OpenOptions::new()
-        .create(true)
-        .append(true)
+    let mut open_options = OpenOptions::new();
+    open_options.create(true);
+    if fresh {
+        open_options.write(true).truncate(true);
+    } else {
+        open_options.append(true);
+    }
+    let mut log_file = open_options
         .open(&log_path)
         .with_context(|| format!("failed to open log file {}", log_path.display()))?;
 

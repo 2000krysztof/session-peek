@@ -1,6 +1,7 @@
 mod ansi;
 mod cli;
 mod config;
+mod delete;
 mod line_assembler;
 mod log_format;
 mod query;
@@ -14,7 +15,11 @@ fn main() {
     let cli = Cli::parse();
 
     let outcome = match cli.command {
-        Commands::Run { tag, command } => runner::cmd_run(&tag, &command).map(Some),
+        Commands::Run {
+            tag,
+            fresh,
+            command,
+        } => runner::cmd_run(&tag, fresh, &command).map(Some),
         Commands::Log {
             tag,
             tail,
@@ -31,6 +36,7 @@ fn main() {
             since.as_deref(),
         )
         .map(|_| None),
+        Commands::Delete { tag } => delete::cmd_delete(&tag).map(|_| None),
     };
 
     match outcome {

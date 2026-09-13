@@ -20,6 +20,9 @@ pub enum Commands {
         /// Short name to identify this process later, e.g. "frontend" or "backend"
         #[arg(short = 't', long)]
         tag: String,
+        /// Clear this tag's existing log and start a fresh one, instead of appending
+        #[arg(long)]
+        fresh: bool,
         /// The command to run, after `--`, e.g. `-- npm run dev`
         #[arg(last = true)]
         command: Vec<String>,
@@ -43,5 +46,10 @@ pub enum Commands {
         /// Only show lines newer than this, e.g. "30s", "10m", "2h"
         #[arg(long)]
         since: Option<String>,
+    },
+    /// Delete a tag's log file
+    Delete {
+        /// Tag whose log should be deleted, as passed to `run -t`
+        tag: String,
     },
 }
