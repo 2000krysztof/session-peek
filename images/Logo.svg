@@ -56,23 +56,70 @@
        style="fill:#1b1730;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round"
        d="m 135.19585,33.887978 c 0,0 -30.18703,33.850612 -67.424623,33.850612 -37.237587,0 -67.42462237,-33.850612 -67.42462237,-33.850612 0,0 30.18703237,-33.85061568 67.42462237,-33.85061568 37.237593,1e-6 67.424623,33.85061568 67.424623,33.85061568 z"
        sodipodi:nodetypes="cscsc" />
+      <mask id="blink-mask" maskUnits="userSpaceOnUse">
+        <rect
+        x="0"
+        y="0"
+        width="110"
+        height="200"
+        fill="white"
+    />
+
+    <!-- The eyelid -->
+    <ellipse
+        cx="68"
+        cy="-100"
+        rx="100"
+        ry="40"
+        fill="black">
+
+      <animate
+    attributeName="cy"
+    values="-100;-100;40;-100;-100;40;-100;-100"
+    keyTimes="0;0.20;0.25;0.30;0.70;0.75;0.80;1"
+    dur="5s"
+    repeatCount="indefinite"/>
+    </ellipse>
+</mask>
     <path
+       mask="url(#blink-mask)"
        id="path1697"
        style="fill:#6c5fa8;fill-opacity:1;stroke:none;stroke-width:1.78202;stroke-linecap:round"
        d="m 67.751091,3.7266173 c -12.662987,0 -24.408389,4.394943 -34.095215,9.8281177 a 38.708202,41.502439 0 0 0 -4.77754,19.922372 38.708202,41.502439 0 0 0 5.379335,21.080844 c 9.569484,5.277263 21.092356,9.491075 33.49342,9.491075 12.194286,0 23.537636,-4.075559 33.011339,-9.229083 a 38.708202,41.502439 0 0 0 5.53266,-21.342836 38.708202,41.502439 0 0 0 -4.87561,-20.162263 C 91.815647,7.9924493 80.227807,3.7266173 67.751091,3.7266173 Z" />
     <path
+     mask="url(#blink-mask)"
        id="path2510"
        style="fill:#c8beeb;fill-opacity:1;stroke:none;stroke-width:1.78202;stroke-linecap:round"
        d="M 40.887052,9.9078909 C 38.371275,11.035569 35.955071,12.26517 33.655968,13.554696 a 38.708203,41.502438 0 0 0 -4.777486,19.922299 38.708203,41.502438 0 0 0 5.379001,21.080883 c 1.658733,0.914739 3.380073,1.794352 5.150588,2.628779 C 34.751259,46.041079 34.235737,23.956004 40.887052,9.9078909 Z" />
-    <text
-       xml:space="preserve"
-       transform="matrix(0.74861144,0,0,0.74861144,-194.66291,-154.92242)"
-       id="text5935"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect5937);fill:#b9b4c8;fill-opacity:1;stroke:none"><tspan
-         x="309.56445"
-         y="263.55469"
-         id="tspan14907">&lt;/&gt;</tspan></text>
+   <text
+    mask="url(#blink-mask)"
+    x="-62"
+    y="45.3"
+    style="font-style:normal;
+           font-weight:normal;
+           font-size:40px;
+           line-height:1.25;
+           font-family:sans-serif;
+           white-space:pre;
+           fill:#b9b4c8;
+           fill-opacity:1;
+           stroke:none">
+<animate
+    attributeName="dx"
+    values="0;3;-2;0"
+    dur="5s"
+    repeatCount="indefinite"/>
+
+<animate
+    attributeName="dy"
+    values="0;1;0"
+    dur="5s"
+    repeatCount="indefinite"/>
+
+    &lt;/&gt;
+</text>
     <path
+     mask="url(#blink-mask)"
        id="path14860"
        style="fill:#2d274e;fill-opacity:1;stroke:none;stroke-width:1.81465;stroke-linecap:round"
        d="m 94.188397,9.6680393 c 2.57857,1.1408777 5.05509,2.3848707 7.411583,3.6894917 a 39.674412,41.988239 0 0 1 4.89674,20.155497 39.674412,41.988239 0 0 1 -5.51327,21.327642 c -1.700143,0.925446 -3.464453,1.815354 -5.279153,2.659549 4.773053,-11.276041 5.301443,-33.61963 -1.5159,-47.8321797 z" />
